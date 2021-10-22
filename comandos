@@ -1,1 +1,41 @@
+--conectarse ssh
+ssh {{username}}@{{nameServer or ipServer}}
+ssh {{username}}@{{nameServer or ipServer}} -X {{COMANDO O APLICACION}} --> con el -X lo ejecuta en entorno gráfico
 
+--conectarse sftp
+sftp {{username}}@{{nameServer or ipServer}}
+
+-- subir fichero
+sftp> put archivo1.txt
+
+-- descargar fichero
+sftp> get archivo1.txt
+
+--copiar con scp
+scp hola.txt {{username}}@{{nameServer or ipServer}}:/var/archivos
+
+-- generar ceretificado con ssh
+ssh-keygen
+cd
+cd .ssh
+ls
+--> vemos loas arcivos
+id_rsa 
+ida_rsa_pub -->llave publica
+known hosts --> hosts conocidos por el servidor
+
+-- copiar certificado a otor server par aque no nos pida la contraseña
+ssh-copy-id {{username}}@{{nameServer or ipServer}}
+
+--crear proxy o tunel LOCAL a un puerto específico del otro servidor
+ssh -L 8080:{{nameServer or ipServer DESTINO}}:443 {{username}}@{{nameServer or ipServer}}
+
+--crear proxy o tunel REMOTO a un puerto específico del otro servidor
+ssh -R 8080:{{nameServer or ipServer DESTINO}}:443 {{username}}@{{nameServer or ipServer}}
+
+--rsync
+mkdir ../test1
+rsync {{origen}} {{destino}}
+rsync ./* ../test1
+rsync -e ssh ./* {{username}}@{{nameServer or ipServer}}:/test1
+rsync -avz -e ssh ./* {{username}}@{{nameServer or ipServer}}:/test1
